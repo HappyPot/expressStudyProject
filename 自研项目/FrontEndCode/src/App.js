@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import './App.css';
 // import Header from './components/Header/Header'
-import { Form, Input, Button,message  } from 'antd';
+import { Form, Input, Button,message} from 'antd';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 const layout = {
@@ -38,6 +38,8 @@ class App extends Component {
       const data = await response.json()
       if(data.msg !== 'success'){
         message.error(data.msg);
+      }else{
+        message.success('注册成功')
       }
     }catch(e){
       message.error(e);

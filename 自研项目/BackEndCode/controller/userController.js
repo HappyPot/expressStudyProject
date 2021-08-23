@@ -19,23 +19,27 @@ async function checkExist(obj){
 exports.register = async (req, res, next) => {
   try {
     let {name,password} = req.body
-    if(checkExist(req.body)){
-      res.status(200).json({
-        code:200,
-        msg:"用户已经存在",
-        data:[]
+    checkExist(req.body).then(result=>{
+      if(result){
+        res.status(200).json({
+          code:200,
+          msg:"用户已经存在",
+          data:[]
+        })
+        return
+      }
+      let sql = 'INSERT INTO user(name,password,status,create_time) VALUES (?,?,?,?)'
+      let sqlArr = [name,password,1,(new Date().valueOf())]
+      db.sqlConnect(sql,sqlArr).then(data=>{
+        res.status(200).json({
+          code:200,
+          msg:"success",
+          data:data
+        })
+      }).catch(err=>{
+        console.log(err)
+        console.log("连接报错了")
       })
-      return
-    }
-    let sql = 'INSERT INTO user(name,password,status,create_time) VALUES (?,?,?,?)'
-    let sqlArr = [name,password,status,(new Date().valueOf())]
-    db.sqlConnect(sql,sqlArr).then(res=>{
-      res.status(200).json({
-        data:data
-      })
-    }).catch(err=>{
-      console.log(err)
-      console.log("连接报错了")
     })
     // 处理请求
   } catch (err) {
