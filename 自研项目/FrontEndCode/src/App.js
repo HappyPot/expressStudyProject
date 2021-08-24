@@ -46,8 +46,26 @@ class App extends Component {
     }
  
   };
-  onReset = () => {
-    this.formRef.current.resetFields();
+  login = async (values) => {
+      const response = await fetch('http://localhost:3000/api/users/login', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name:values.name,
+          password:values.password
+        })
+      })
+      const data = await response.json()
+      if(data.msg !== 'success'){
+        message.error(data.msg);
+      }else{
+        message.success('登录成功')
+      }
+    
+  
   };
   render() {
     return (
@@ -77,10 +95,10 @@ class App extends Component {
         </Form.Item>
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
-            Submit
+            注册
           </Button>
-          <Button htmlType="button" onClick={this.onReset}>
-            Reset
+          <Button type="primary"  onClick={this.login.bind(this)}>
+            登录
           </Button>
         </Form.Item>
       </Form>

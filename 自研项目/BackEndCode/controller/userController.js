@@ -1,25 +1,49 @@
 
 const db = require('../model/index')
+const jwt = require('jsonwebtoken')
+const userModel = require('../model/userModel')
 exports.login = async (req, res, next) => {
   try {
-    // 处理请求
-    res.send("post /users/login");
+    userModel.findOne({
+      column:"name",
+      value:req.body.name
+    }).then((result)=>{
+      if(!result){
+        // 处理请求
+        const token = 'Bearer ' + jwt.sign(
+          {
+            name: req.body.name,
+          },
+          '2100796e-5472-40ae-bb25-2f4a487e6388',
+          {
+            expiresIn: 3600 * 24 * 3
+          }
+        )
+        res.status(200).json({
+          code:200,
+          msg:"success",
+          data:{ token: token }
+        })
+      }else{
+        res.status(500).json({
+          code:500,
+          msg:"用户不存在",
+        })
+      }
+    })
   } catch (err) {
     next(err);
   }
 };
-// 查询是否存在
-async function checkExist(obj){
-  let sql = 'select name from user where name = ?'
-  let sqlArr = [obj.name]
-  let val = await db.sqlConnect(sql,sqlArr)
-  return val.length
-} 
+
 // Registration 用户注册
 exports.register = async (req, res, next) => {
   try {
     let {name,password} = req.body
-    checkExist(req.body).then(result=>{
+    userModel.findOne({
+      column:"name",
+      value:req.body.name
+    }).then((result)=>{
       if(result){
         res.status(200).json({
           code:200,
@@ -28,9 +52,9 @@ exports.register = async (req, res, next) => {
         })
         return
       }
-      let sql = 'INSERT INTO user(name,password,status,create_time) VALUES (?,?,?,?)'
-      let sqlArr = [name,password,1,(new Date().valueOf())]
-      db.sqlConnect(sql,sqlArr).then(data=>{
+      userModel.insetUser({
+        value:req.body
+      }).then(data=>{
         res.status(200).json({
           code:200,
           msg:"success",
@@ -38,7 +62,6 @@ exports.register = async (req, res, next) => {
         })
       }).catch(err=>{
         console.log(err)
-        console.log("连接报错了")
       })
     })
     // 处理请求
