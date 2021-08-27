@@ -5,10 +5,10 @@ module.exports = {
   findOne:async (body)=>{
     let column = body.column
     let name = body.value
-    let sql = `select ${column} from user where name = ?`
+    let sql = `select ${column},id,password from user where name = ?`
     let sqlArr = [name]
     let val = await db.sqlConnect(sql,sqlArr)
-    return val.length
+    return val
   },
   insetUser:async (body)=>{
     let {name,password} = body.value
@@ -17,4 +17,12 @@ module.exports = {
     let result = db.sqlConnect(sql,sqlArr)
     return result
   },
+  // 查询当前登录用户信息
+  findCurrentUser:async (body)=>{
+    let sql = 'select * from user where id = ?'
+    let sqlArr = [body.value]
+    let result = db.sqlConnect(sql,sqlArr)
+    return result
+  }
+
 }

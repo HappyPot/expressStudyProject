@@ -6,18 +6,19 @@ const port = 3000
 const router = require('./router/index')
 const errorHandler = require('./middleware/error-handler')
 const expressJwt = require('express-jwt')
-app.use(expressJwt({
-  secret: '2100796e-5472-40ae-bb25-2f4a487e6388',  // 签名的密钥 或 PublicKey
-  algorithms:['HS256']
-}).unless({
-  path: ['/api/users/login', '/api/users']  // 指定路径不经过 Token 解析
-}))
+const {jwtSecert} = require('./config/config.default')
+
 require('./model/index')
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cors())
-
+app.use(expressJwt({
+  secret: jwtSecert,  // 签名的密钥 或 PublicKey
+  algorithms:['HS256']
+}).unless({
+  path: ['/api/users/login', '/api/users']  // 指定路径不经过 Token 解析
+}))
 app.use('/api',router)
 app.use(errorHandler())
 
