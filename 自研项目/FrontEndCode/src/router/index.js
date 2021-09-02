@@ -1,5 +1,5 @@
 import Home from '../components/Home/Home.js';
-import Header from '../components/Header/Header.js';
+import Index from '../components/Index/Index.js';
 import React from 'react';
 import {Route,Switch,Redirect} from 'react-router-dom';
 // import { createHashHistory } from "history";
@@ -8,11 +8,11 @@ import {Route,Switch,Redirect} from 'react-router-dom';
 class RouterConfig extends React.Component{
     render(){
         return(
-                <Switch>
-                    <Route path='/home' exact component={Home}/>
-                    <Route path='/header' component={Header}/>
-                    <Redirect to="/home"/>
-                </Switch>
+            <Switch>
+                <Route path='/home' exact component={Home}/>
+                <Route path='/index' component={Index}/>
+                <Redirect to="/home"/>
+            </Switch>
         )
     }
 }

@@ -1,5 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const articleController = require('../controller/articleController')
+// 添加文章
+router.post("/AddArticle", articleController.AddArticle);
+// 获取某个用户的文章列表
+router.post("/getArticleList", articleController.getArticleList);
 
 // List Articles
 router.get("/", async (req, res, next) => {

@@ -63,7 +63,7 @@ class Home extends Component {
         message.error(data.msg);
       }else{
         setToken(data.data.token)
-        this.props.history.push( { pathname:'/header',state:{id : data.data.id } })
+        this.props.history.push( { pathname:'/index',state:{id : data.data.id } })
         message.success('登录成功')
       }
     
