@@ -9,17 +9,16 @@ import ArticleList from '../ArticleList/ArticleList'
 const { SubMenu } = Menu;
 const {Content,Sider } = Layout;
 class Article extends Component {
-  gotoEdit(){
-    this.props.history.push( { pathname:'/index/article/articleedit'})
-  }
+  state = {menunumSelect:['1']}
   render() {
+    let {menunumSelect} = this.state
     return (
       <Content style={{ padding: '0 50px' }}>
       <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
-        <Sider className="site-layout-background" width={200}>
+        <Sider width={200}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={menunumSelect}
             defaultOpenKeys={['sub1']}
             style={{ height: '100%' }}
           >

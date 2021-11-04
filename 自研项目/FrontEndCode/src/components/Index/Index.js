@@ -6,7 +6,8 @@ import { getToken } from '../../until/auto' // 引入
 import {message} from 'antd';
 import Article from '../Article/Article';
 // import user from '../../containers/user'
-
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 const { Header, Footer} = Layout;
 class Index extends Component{
   state = {userInfo:{}}
@@ -46,7 +47,10 @@ class Index extends Component{
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
               <Menu.Item key="1" onClick={this.article}>文章</Menu.Item>
             </Menu>
-            <div className="userInfo">用户名：{userInfo.name}</div>
+            <div className="userInfo">
+              <Avatar style={{ backgroundColor: '#87d068',marginRight:"10px" }} icon={<UserOutlined />} />
+              用户名：{userInfo.name}
+              </div>
           </Header>
           <Switch>
               <Route path='/index/article' component={Article} {...this.props}/>

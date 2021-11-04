@@ -1,3 +1,13 @@
-.nav{
-  color: green;
+.loading{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.ArticleEdit{
+  position: relative;
+  height: 100%;
+}
+.btn_submit{
+  margin-top: 20px;
 }
