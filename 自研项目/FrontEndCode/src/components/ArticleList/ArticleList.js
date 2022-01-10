@@ -14,10 +14,10 @@ class ArticleList extends Component {
     const response = await fetch('http://localhost:3000/api/articles/getArticleList', {
       method: 'POST',
       mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        "Authorization":token
-      },
+      // headers: {
+      //   'Content-Type': 'application/json',
+      //   "Authorization":token
+      // },
       body: JSON.stringify({
         userid:16,
       })
@@ -36,7 +36,7 @@ class ArticleList extends Component {
             cover={
               <img
                 alt="example"
-                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                src={item.img}
               />
             }
             actions={[

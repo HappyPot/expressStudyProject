@@ -2,9 +2,9 @@ const db = require('./index')
 
 module.exports = {
   insetarticle:async (body)=>{
-    let {userId,content} = body
-    let sql = 'INSERT INTO article(userid,content,likenum) VALUES (?,?,?)'
-    let sqlArr = [userId,content,0]
+    let {userId,content,createtime,imageUrl} = body
+    let sql = 'INSERT INTO article(userid,content,likenum,createtime,img) VALUES (?,?,?,?,?)'
+    let sqlArr = [userId,content,0,createtime,imageUrl]
     let result = db.sqlConnect(sql,sqlArr)
     return result
   },

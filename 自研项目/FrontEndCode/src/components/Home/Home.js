@@ -5,7 +5,8 @@ import './Home.css';
 // import Header from './components/Header/Header'
 import { Form, Input, Button,message} from 'antd';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-import { setToken } from '../../until/auto' // 引入
+import { setToken,getToken } from '../../until/auto' // 引入
+
 const layout = {
   labelCol: {
     span: 8,
@@ -21,6 +22,29 @@ const tailLayout = {
   },
 };
 class Home extends Component {
+  componentDidMount(){
+    let token = getToken()
+    const originFetch = fetch;
+    Object.defineProperty(window, "fetch", {
+    configurable: true,
+    enumerable: true,
+    // writable: true,
+    get() {
+      return async (url,options) => {
+        
+       let result = await originFetch(url,{...options,...{
+        headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        Accept: 'application/json',
+        "Authorization":token
+        //这里统一加token 实现请求拦截
+        },...options.headers
+      }})
+     return result
+    }
+    }
+  })
+  }
   formRef = React.createRef();
   onFinish = async (values) => {
     try{

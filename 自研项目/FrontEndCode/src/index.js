@@ -5,6 +5,9 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
 import RouterConfig from './router/index'
+
+
+
 ReactDOM.render(
     <BrowserRouter>
       <RouterConfig />

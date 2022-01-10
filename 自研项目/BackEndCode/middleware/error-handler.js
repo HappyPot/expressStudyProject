@@ -1,9 +1,10 @@
 const util = require('util')
 
-module.exports = ()=>{
+module.exports = (err,req,res,next)=>{
   return (err,req,res,next)=>{
     res.status(500).json({
-      error:util.format(err)
+        code:500,
+        msg:util.format(err)
     })
   }
 }

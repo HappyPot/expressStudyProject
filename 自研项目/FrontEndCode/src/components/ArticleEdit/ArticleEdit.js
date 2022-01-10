@@ -45,9 +45,11 @@ class ArticleEdit extends Component {
         body: JSON.stringify({
           userid:16,
           content:this.state.content,
+          imageUrl:this.state.imageUrl
         })
       })
       const data = await response.json()
+      
       if(data.msg !== 'success'){
         message.error(data.msg);
       }else{
@@ -70,7 +72,6 @@ class ArticleEdit extends Component {
     })
   }
   handleChange = info => {
-    debugger
     // if (info.file.status === 'uploading') {
     //   this.setState({ loading: true });
     //   return;
@@ -133,7 +134,7 @@ class ArticleEdit extends Component {
             className="avatar-uploader"
             showUploadList={false}
             action="#"
-            beforeUpload={() => false}
+            beforeUpload={beforeUpload}
             onChange={this.handleChange}
           >
             {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}

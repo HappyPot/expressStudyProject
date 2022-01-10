@@ -8,7 +8,10 @@ const errorHandler = require('./middleware/error-handler')
 const expressJwt = require('express-jwt')
 const {jwtSecert} = require('./config/config.default')
 const helmet = require('helmet')
+const formidable = require('express-formidable') 
 require('./model/index')
+
+// app.use(formidable());  // 中间件
 app.use(helmet())
 app.use(morgan('dev'))
 app.use(express.json())
@@ -22,7 +25,6 @@ app.use(expressJwt({
 }))
 app.use('/api',router)
 app.use(errorHandler())
-
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
